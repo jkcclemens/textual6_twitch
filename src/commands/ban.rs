@@ -1,17 +1,19 @@
 use clap::ArgMatches;
 
-use commands::Command;
+use commands::{Command, HasEntryPoint, HasName};
 use {CommandInfo, echo, command};
 
 type BanFunction = Box<Fn(&str) -> ()>;
 
 pub struct Ban;
 
-impl Command for Ban {
+impl HasName for Ban {
   fn name(&self) -> &str {
     "ban"
   }
+}
 
+impl HasEntryPoint for Ban {
   fn entry<'a>(&self, _: &CommandInfo, matches: &ArgMatches<'a>) {
     let func: BanFunction;
     let sub = if let Some(sub) = matches.subcommand_matches("add") {
@@ -34,6 +36,8 @@ impl Command for Ban {
     func(who);
   }
 }
+
+impl Command for Ban {}
 
 fn add_ban(who: &str) {
   command("ban", Some(&[who]));

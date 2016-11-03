@@ -1,15 +1,19 @@
 use clap::ArgMatches;
 
-use commands::Command;
+use commands::{Command, HasEntryPoint, HasName};
 use {CommandInfo, echo, command};
 
 pub struct Timeout;
 
-impl Command for Timeout {
+impl Command for Timeout {}
+
+impl HasName for Timeout {
   fn name(&self) -> &str {
     "timeout"
   }
+}
 
+impl HasEntryPoint for Timeout {
   fn entry<'a>(&self, _: &CommandInfo, matches: &ArgMatches<'a>) {
     if let Some(sub) = matches.subcommand_matches("add") {
       add_timeout(sub);

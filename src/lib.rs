@@ -3,7 +3,7 @@ extern crate clap;
 mod commands;
 
 use clap::ArgMatches;
-use commands::{Command, ban, slow, timeout, version};
+use commands::{Command, ban, slow, timeout, version, onoff};
 
 type BoxedCommand = Box<Command>;
 
@@ -34,13 +34,19 @@ pub fn command(name: &str, args: Option<&[&str]>) {
   }
 }
 
+/// The entry point for the program's functionality
 pub fn entry(info: CommandInfo) {
+  // Loop through each subcommand
   for command in build_subcommand_map() {
+    // If the subcommand is present in the arg matches
     if let Some(sub) = info.matches.subcommand_matches(command.name()) {
+      // Call the subcommand's entry point
       command.entry(&info, sub);
+      // And end the progrma
       return;
     }
   }
+  // Couldn't find a matching subcommand!
   echo("Not yet implemented.");
 }
 
@@ -50,8 +56,8 @@ fn build_subcommand_map<'a>() -> Vec<BoxedCommand> {
   commands.push(Box::new(timeout::Timeout {}));
   commands.push(Box::new(slow::Slow {}));
   commands.push(Box::new(version::Version {}));
-  // TODO: r9kbeta & r9kbetaoff
-  // TODO: subscribers & subscribersoff
-  // TODO: emoteonly & emoteonlyoff
+  commands.push(Box::new(onoff::r9kbeta::R9KBeta {}));
+  commands.push(Box::new(onoff::subscribers::Subscribers {}));
+  commands.push(Box::new(onoff::emoteonly::EmoteOnly {}));
   commands
 }
