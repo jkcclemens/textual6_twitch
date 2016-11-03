@@ -1,14 +1,23 @@
 use clap::ArgMatches;
 
-use {echo, command};
+use commands::Command;
+use {CommandInfo, echo, command};
 
-pub fn timeout<'a>(matches: &ArgMatches<'a>) {
-  if let Some(sub) = matches.subcommand_matches("add") {
-    add_timeout(sub);
-  } else if let Some(sub) = matches.subcommand_matches("remove") {
-    remove_timeout(sub);
-  } else {
-    echo("Unsupported timeout operation.");
+pub struct Timeout;
+
+impl Command for Timeout {
+  fn name(&self) -> &str {
+    "timeout"
+  }
+
+  fn entry<'a>(&self, _: &CommandInfo, matches: &ArgMatches<'a>) {
+    if let Some(sub) = matches.subcommand_matches("add") {
+      add_timeout(sub);
+    } else if let Some(sub) = matches.subcommand_matches("remove") {
+      remove_timeout(sub);
+    } else {
+      echo("Unsupported timeout operation.");
+    }
   }
 }
 

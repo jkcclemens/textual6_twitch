@@ -3,13 +3,9 @@ extern crate clap;
 mod commands;
 
 use clap::ArgMatches;
-use commands::ban;
-use commands::slow;
-use commands::timeout;
-use commands::version;
-use std::collections::HashMap;
+use commands::{Command, ban, slow, timeout, version};
 
-type SubCommandFunction<'a> = Box<Fn(&ArgMatches<'a>) -> ()>;
+type BoxedCommand = Box<Command>;
 
 #[derive(Debug)]
 pub struct CommandInfo<'a> {
@@ -39,20 +35,23 @@ pub fn command(name: &str, args: Option<&[&str]>) {
 }
 
 pub fn entry(info: CommandInfo) {
-  for (name, func) in build_subcommand_map() {
-    if let Some(sub) = info.matches.subcommand_matches(name) {
-      func(sub);
+  for command in build_subcommand_map() {
+    if let Some(sub) = info.matches.subcommand_matches(command.name()) {
+      command.entry(&info, sub);
       return;
     }
   }
   echo("Not yet implemented.");
 }
 
-fn build_subcommand_map<'a>() -> HashMap<&'a str, SubCommandFunction<'a>> {
-  let mut map: HashMap<&str, SubCommandFunction<'a>> = HashMap::new();
-  map.insert("ban", Box::new(ban::ban));
-  map.insert("timeout", Box::new(timeout::timeout));
-  map.insert("slow", Box::new(slow::slow));
-  map.insert("version", Box::new(version::version));
-  map
+fn build_subcommand_map<'a>() -> Vec<BoxedCommand> {
+  let mut commands: Vec<BoxedCommand> = Vec::new();
+  commands.push(Box::new(ban::Ban {}));
+  commands.push(Box::new(timeout::Timeout {}));
+  commands.push(Box::new(slow::Slow {}));
+  commands.push(Box::new(version::Version {}));
+  // TODO: r9kbeta & r9kbetaoff
+  // TODO: subscribers & subscribersoff
+  // TODO: emoteonly & emoteonlyoff
+  commands
 }
