@@ -15,15 +15,12 @@ impl HasName for Ban {
 
 impl HasEntryPoint for Ban {
   fn entry<'a>(&self, _: &CommandInfo, matches: &ArgMatches<'a>) {
-    let func: BanFunction;
-    let sub = if let Some(sub) = matches.subcommand_matches("add") {
-      func = Box::new(add_ban);
-      sub
+    let (func, sub) = if let Some(sub) = matches.subcommand_matches("add") {
+      (Box::new(add_ban) as BanFunction, sub)
     } else if let Some(sub) = matches.subcommand_matches("remove") {
-      func = Box::new(remove_ban);
-      sub
+      (Box::new(remove_ban) as BanFunction, sub)
     } else {
-      echo("Unsupported timeout operation.");
+      echo("Unsupported ban operation.");
       return;
     };
     let who = match sub.value_of("who") {
