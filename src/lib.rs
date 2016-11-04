@@ -60,14 +60,14 @@ pub fn entry(info: CommandInfo) {
 }
 
 fn build_subcommand_map<'a>() -> Vec<BoxedCommand> {
-  let mut commands: Vec<BoxedCommand> = Vec::new();
-  commands.push(Box::new(ban::Ban {}));
-  commands.push(Box::new(timeout::Timeout {}));
-  commands.push(Box::new(slow::Slow {}));
-  commands.push(Box::new(version::Version {}));
-  commands.push(Box::new(onoff::r9kbeta::R9KBeta {}));
-  commands.push(Box::new(onoff::subscribers::Subscribers {}));
-  commands.push(Box::new(onoff::emoteonly::EmoteOnly {}));
-  commands
 /// Builds a map of `BoxedCommand`s to be queried. Should only ever be called once.
+  vec![
+    Box::new(ban::Ban {}),
+    Box::new(timeout::Timeout {}),
+    Box::new(slow::Slow {}),
+    Box::new(version::Version {}),
+    Box::new(onoff::r9kbeta::R9KBeta {}),
+    Box::new(onoff::subscribers::Subscribers {}),
+    Box::new(onoff::emoteonly::EmoteOnly {})
+  ]
 }
