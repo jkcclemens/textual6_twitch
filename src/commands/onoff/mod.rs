@@ -7,6 +7,10 @@ pub mod r9kbeta;
 pub mod emoteonly;
 pub mod subscribers;
 
+/// A marker trait to indicate that this subcommand is an on/off command.
+///
+/// On/off commands are toggleable, using the name from the `HasName` trait to turn on the command,
+/// and using the name plus the word "off" (e.g. "commandoff") to turn off the command.
 pub trait OnOff {}
 
 impl<T> HasEntryPoint for T where T: OnOff + HasName {
