@@ -25,7 +25,7 @@ impl HasEntryPoint for Timeout {
   }
 }
 
-fn add_timeout<'a>(matches: &ArgMatches<'a>) {
+fn add_timeout(matches: &ArgMatches) {
   let who = match matches.value_of("who") {
     Some(w) => w,
     None => {
@@ -53,7 +53,7 @@ fn add_timeout<'a>(matches: &ArgMatches<'a>) {
   }
 }
 
-fn remove_timeout<'a>(matches: &ArgMatches<'a>) {
+fn remove_timeout(matches: &ArgMatches) {
   let who = match matches.value_of("who") {
     Some(w) => w,
     None => {

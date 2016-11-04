@@ -59,8 +59,8 @@ pub fn entry(info: CommandInfo) {
   echo("Not yet implemented.");
 }
 
-fn build_subcommand_map<'a>() -> Vec<BoxedCommand> {
 /// Builds a map of `BoxedCommand`s to be queried. Should only ever be called once.
+fn build_subcommand_map() -> Vec<BoxedCommand> {
   vec![
     Box::new(ban::Ban {}),
     Box::new(timeout::Timeout {}),
