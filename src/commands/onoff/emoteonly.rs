@@ -1,5 +1,5 @@
-use commands::onoff::OnOff;
 use commands::{Command, HasName};
+use commands::onoff::OnOff;
 
 pub struct EmoteOnly;
 

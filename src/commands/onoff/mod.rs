@@ -1,7 +1,7 @@
-use clap::ArgMatches;
+use {command, echo};
 use CommandInfo;
+use clap::ArgMatches;
 use commands::{HasEntryPoint, HasName};
-use {echo, command};
 
 pub mod r9kbeta;
 pub mod emoteonly;
@@ -13,7 +13,9 @@ pub mod subscribers;
 /// and using the name plus the word "off" (e.g. "commandoff") to turn off the command.
 pub trait OnOff {}
 
-impl<T> HasEntryPoint for T where T: OnOff + HasName {
+impl<T> HasEntryPoint for T
+  where T: OnOff + HasName
+{
   fn entry<'a>(&self, _: &CommandInfo, matches: &ArgMatches<'a>) {
     if matches.subcommand_matches("on").is_some() {
       command(self.name(), None);

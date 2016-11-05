@@ -1,9 +1,9 @@
 extern crate textual6_twitch;
 extern crate clap;
 
-use textual6_twitch::{CommandInfo, entry};
-use clap::{Arg, App, AppSettings, SubCommand};
+use clap::{App, AppSettings, Arg, SubCommand};
 use std::env::args;
+use textual6_twitch::{CommandInfo, entry};
 
 fn main() {
   // Collect all command-line args into a vec

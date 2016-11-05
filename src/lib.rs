@@ -3,7 +3,7 @@ extern crate clap;
 mod commands;
 
 use clap::ArgMatches;
-use commands::{Command, ban, slow, timeout, version, onoff};
+use commands::{Command, ban, onoff, slow, timeout, version};
 
 /// A `Command` with a `Box` around it.
 type BoxedCommand = Box<Command>;
@@ -61,13 +61,11 @@ pub fn entry(info: CommandInfo) {
 
 /// Builds a map of `BoxedCommand`s to be queried. Should only ever be called once.
 fn build_subcommand_map() -> Vec<BoxedCommand> {
-  vec![
-    Box::new(ban::Ban {}),
-    Box::new(timeout::Timeout {}),
-    Box::new(slow::Slow {}),
-    Box::new(version::Version {}),
-    Box::new(onoff::r9kbeta::R9KBeta {}),
-    Box::new(onoff::subscribers::Subscribers {}),
-    Box::new(onoff::emoteonly::EmoteOnly {})
-  ]
+  vec![Box::new(ban::Ban {}),
+       Box::new(timeout::Timeout {}),
+       Box::new(slow::Slow {}),
+       Box::new(version::Version {}),
+       Box::new(onoff::r9kbeta::R9KBeta {}),
+       Box::new(onoff::subscribers::Subscribers {}),
+       Box::new(onoff::emoteonly::EmoteOnly {})]
 }

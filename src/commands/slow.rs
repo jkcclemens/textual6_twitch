@@ -1,7 +1,6 @@
+use {CommandInfo, command, echo};
 use clap::ArgMatches;
-
 use commands::{Command, HasEntryPoint, HasName};
-use {CommandInfo, echo, command};
 
 pub struct Slow;
 

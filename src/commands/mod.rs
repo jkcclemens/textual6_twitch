@@ -4,8 +4,8 @@ pub mod slow;
 pub mod version;
 pub mod onoff;
 
-use clap::ArgMatches;
 use CommandInfo;
+use clap::ArgMatches;
 
 /// A trait for giving something a name.
 pub trait HasName {

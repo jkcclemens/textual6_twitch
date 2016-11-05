@@ -1,6 +1,5 @@
+use {CommandInfo, echo};
 use clap::ArgMatches;
-
-use {echo, CommandInfo};
 use commands::{Command, HasEntryPoint, HasName};
 
 pub struct Version;
